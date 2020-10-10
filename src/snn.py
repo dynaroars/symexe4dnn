@@ -1,5 +1,39 @@
 import z3
 
+class Neuron:
+    def __init__(self, weights, bias, activation):
+        self.weight = weights
+        self.bias = bias
+        self.activation = activation
+
+    def eval(self, vs):
+        outp = sum(v*w for v,w in zip(vs, ws))
+        if bias is not None:
+            outp += bias
+        if activation is not None:
+            outp = activation(outp)
+        return outp
+
+class Layer:
+    def __init__(self, neurons):
+        self.neurons = neurons
+
+    def eval(self, inp):
+        return [neuron.eval(inp) for neuron in self.neurons]
+   
+class DNN:
+    def __init__(self, layers):
+        self.layers = layers
+
+    def eval(self, inp):
+        myinp = inp
+        for layer in self.layers:
+            myoutp = layer.eval(myinp)
+            myinp = myoutp
+        return myoutp
+
+    def mk(self, weights):
+        pass
 
 class FullyConnectedDNN:
     def __init__(self, layers):
