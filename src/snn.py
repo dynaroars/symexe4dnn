@@ -8,27 +8,11 @@ class FullyConnectedDNN:
         self.hidden_layers = self.layers[:-1]
         self.output_layer = self.layers[-1]
 
-    @property
-    def ninps(self):
-        # numbers of inputs/weights to the first neuron
-        return len(self.first_hidden_layer[0])
-
-    @property
-    def ith_hidden_layer(self, i):
-        assert 0 <= i < len(self.hidden_layers), i
-        return self.hidden_layers[i]
-
-    def eval(self, inp, neuron=None):
-        assert neuron is None or (
-            isinstance(neuron, tuple) and len(neuron) == 2
-        ), neuron
-        if neuron is not None:
-            i, j = neuron
+    def eval(self, inp):
 
         myinp = inp
         for hidden_layer in self.hidden_layers:
             myoutp = self.eval_layer(myinp, hidden_layer, activation=True)
-            # print("hidden_layer", hidden_layer, myinp, myoutp)
             myinp = myoutp
         myoutp = self.eval_layer(myinp, self.output_layer, activation=False)
         return myoutp
@@ -76,8 +60,8 @@ hidden_layer3 = [[1.0, -1.0], [-1.0, 1.0]]
 dnn = [hidden_layer1, hidden_layer2, hidden_layer3]
 FCDNN = FullyConnectDNN_CONCRETE(dnn)
 
-# concrete_outp = FCDNN.eval([1.0, -1.0])
-# print(concrete_outp)
+concrete_outp = FCDNN.eval([1.0, -1.0])
+print(concrete_outp)
 
 
 dnn = [hidden_layer1, hidden_layer2, hidden_layer3]
@@ -89,9 +73,9 @@ dnn = [hidden_layer1, hidden_layer2, hidden_layer3]
 # dnn += dnn  # 128
 # dnn += dnn  # 256 ..
 
-dnn = [hidden_layer1, hidden_layer2]
-FCDNN = FullyConnectDNN_SYMBOLIC(dnn)
-symbolic_outp = FCDNN.eval([z3.Real("x"), z3.Real("y")])
+# dnn = [hidden_layer1, hidden_layer2]
+# FCDNN = FullyConnectDNN_SYMBOLIC(dnn)
+# symbolic_outp = FCDNN.eval([z3.Real("x"), z3.Real("y")])
 
-print(symbolic_outp)
-z3.solve(z3.And(*symbolic_outp))
+# print(symbolic_outp)
+# z3.solve(z3.And(*symbolic_outp))
