@@ -5,10 +5,10 @@ import pathlib
 
 
 
-def get_acasxu_dummy(fidx):
-    floc = pathlib.Path(__file__).parent.resolve()
+def get_dnn(fidx = 1):
+    floc = pathlib.Path(__file__).parent.parent.resolve()
 
-    fname = floc / [".net/ACASXU_1.onnx", ".net/ACASXU_1.onnx", ".net/ACASXU_2.onnx", ".net/ACASXU_3.onnx", ][fidx]
+    fname = floc / ["example/acasxu/.net/ACASXU_1.onnx", "example/acasxu/.net/ACASXU_1.onnx", "example/acasxu/.net/ACASXU_2.onnx", "example/acasxu/.net/ACASXU_3.onnx"][fidx]
     onnx_model = onnx.load(fname)
     torch_model = onnx2pytorch.ConvertModel(onnx_model)
     # (weights, bias, use activation function relu or not)

@@ -1,5 +1,7 @@
 from z3 import *
 from time import perf_counter
+from sys import argv
+
 def dnn_num_inputs(dnn):
     # returns the number of inputs for a dnn
     return len(dnn[0][0][0])
@@ -199,5 +201,33 @@ def test2(name='test2'):
     print('=============DONE:============')
 
 if __name__ == '__main__':
-    test()
-    test2()
+    exec(open(argv[1]).read())
+
+    print('\n\n=============RUNNING:==========')
+    print('=============     =============')
+
+    symbolic_states = my_symbolic_execution(get_dnn())
+
+    print("1. Generating random inputs and obtain outputs")
+    solve(symbolic_states)
+
+    print("2. Simultation concrete execution")
+    g = z3.And([i0 == 1.0, i1 == -1.0])
+    solve(z3.And(symbolic_states, z3.And(g)))
+
+    print("3. Checking assertions")
+    # #1
+    # g = z3.Implies(z3.And([n00 > 0.0, n01 == 0.0]), o0 > o1)
+    # print(g)
+    # prove(z3.Implies(symbolic_states, g))
+    # #2
+    # g = z3.Implies(z3.And([i0 - i1 > 0.0, i0 + i1 <= 0.0]), o0 > o1)
+    # print(g)
+    # prove(z3.Implies(symbolic_states, g))
+    # #3
+    # g = z3.Implies(i0 - i1 > 0.0, o0 > o1)
+    # print(g)
+    # prove(z3.Implies(symbolic_states, g))
+    print('=============     =============')
+    print('=============DONE:============')
+
