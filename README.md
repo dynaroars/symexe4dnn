@@ -23,7 +23,7 @@ Currently, we have a couple hardcoded input under ```./example```.
 ## dependencies
 - z3-solver
 
-If you want to try the larger example, you will need the following packages 
+If you want to try the ACASXU example, you will need the following packages 
 - onnx
 - onnx2pytorch
 - torch
