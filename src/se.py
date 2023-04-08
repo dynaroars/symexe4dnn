@@ -93,12 +93,13 @@ def my_symbolic_execution(dnn):
     ##########################################
     print('============================')    #
     print('DONE:')                           #
-    print('symbolic states obtained')        #
     print(str(dnn_num_inputs(dnn))+'\tinputs')
     print(str(len(dnn))+'\tlayers')          #
     print(str(len(dnn[-1]))+'\toutputs')     #
     print('time used: ')                     #
     print(str(perf_counter()-start) + ' s')  #
+    print('symbolic states obtained')        #
+    print(temp)                              #
     print('\n=========SE finished=========') #
     ##########################################
     return temp
@@ -119,11 +120,11 @@ if __name__ == '__main__':
     print("1. Generating random inputs and obtain outputs")
     solve(symbolic_states)
 
-    print("2. Simultation concrete execution")
+    print("2. Simulating concrete execution")
     g = z3.And([i0 == 1.0, i1 == -1.0])
     solve(z3.And(symbolic_states, z3.And(g)))
 
-    print("3. Checking assertions")
+    # print("3. Checking assertions")
     # #1
     # g = z3.Implies(z3.And([n00 > 0.0, n01 == 0.0]), o0 > o1)
     # print(g)
