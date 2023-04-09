@@ -14,11 +14,13 @@ Currently, we have a couple hardcoded input under ```./example```.
     ```
     This is a toy DNN example that has 4 inputs, 3hidden layers, and 4 neurons at each layer (12 ReLU neurons). SE is able to scale on these kind of small networks.
     
-    <details>
     <img src="./img/4x3.png" />
      <br/>
+    
+    
+    <details>
 
-    <summary>Sample in/output</summary>
+    <summary>Running Symexe4DNN on this example</summary>
 
     ```
     $ python se.py ../example/toy/4x3_1.py
